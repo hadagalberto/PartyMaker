@@ -32,7 +32,6 @@ namespace Churras.Models
         public DateTime DataModificacao { get; set; }
 
         public Usuario Usuario { get; set; }
-        public int IdUsuario { get; set; }
 
         public List<Participante> Participantes { get; set; }
         public List<Recurso> Recursos { get; set; }

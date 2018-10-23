@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Churras.Models;
+using Microsoft.AspNetCore.Authorization;
 using PartyMaker.Data;
 
 namespace PartyMaker.Controllers
@@ -20,12 +21,14 @@ namespace PartyMaker.Controllers
         }
 
         // GET: Eventos
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Eventos.ToListAsync());
         }
 
-        // GET: Eventos/Details/5
+        // GET: Eventoes/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,18 +46,20 @@ namespace PartyMaker.Controllers
             return View(evento);
         }
 
-        // GET: Eventos/Create
+        // GET: Eventoes/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Eventos/Create
+        // POST: Eventoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome,Local,DataEvento,IdUsuario")] Evento evento)
+        [Authorize]
+        public async Task<IActionResult> Create([Bind("Nome,Local,DataEvento")] Evento evento)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +70,8 @@ namespace PartyMaker.Controllers
             return View(evento);
         }
 
-        // GET: Eventos/Edit/5
+        // GET: Eventoes/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +87,13 @@ namespace PartyMaker.Controllers
             return View(evento);
         }
 
-        // POST: Eventos/Edit/5
+        // POST: Eventoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Nome,Local,DataEvento,IdUsuario")] Evento evento)
+        [Authorize]
+        public async Task<IActionResult> Edit(int id, [Bind("Nome,Local,DataEvento")] Evento evento)
         {
             if (id != evento.IdEvento)
             {
@@ -116,7 +123,8 @@ namespace PartyMaker.Controllers
             return View(evento);
         }
 
-        // GET: Eventos/Delete/5
+        // GET: Eventoes/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,9 +142,10 @@ namespace PartyMaker.Controllers
             return View(evento);
         }
 
-        // POST: Eventos/Delete/5
+        // POST: Eventoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var evento = await _context.Eventos.FindAsync(id);

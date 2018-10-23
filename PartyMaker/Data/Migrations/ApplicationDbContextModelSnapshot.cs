@@ -31,8 +31,6 @@ namespace PartyMaker.Data.Migrations
 
                     b.Property<DateTime>("DataModificacao");
 
-                    b.Property<int>("IdUsuario");
-
                     b.Property<string>("Local")
                         .IsRequired();
 
@@ -61,16 +59,16 @@ namespace PartyMaker.Data.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("HashCode");
+                    b.Property<int?>("EventoIdEvento");
 
-                    b.Property<int>("IdEvento");
+                    b.Property<string>("HashCode");
 
                     b.Property<string>("Nome")
                         .IsRequired();
 
                     b.HasKey("IdParticipante");
 
-                    b.HasIndex("IdEvento");
+                    b.HasIndex("EventoIdEvento");
 
                     b.ToTable("Participantes");
                 });
@@ -83,10 +81,12 @@ namespace PartyMaker.Data.Migrations
 
                     b.Property<DateTime>("DataAlteracao");
 
-                    b.Property<int>("IdEvento");
+                    b.Property<int?>("EventoIdEvento");
 
                     b.Property<string>("NomeRecurso")
                         .IsRequired();
+
+                    b.Property<int?>("ParticipanteIdParticipante");
 
                     b.Property<float>("Quantidade");
 
@@ -95,7 +95,9 @@ namespace PartyMaker.Data.Migrations
 
                     b.HasKey("IdRecurso");
 
-                    b.HasIndex("IdEvento");
+                    b.HasIndex("EventoIdEvento");
+
+                    b.HasIndex("ParticipanteIdParticipante");
 
                     b.ToTable("Recursos");
                 });
@@ -286,7 +288,7 @@ namespace PartyMaker.Data.Migrations
             modelBuilder.Entity("Churras.Models.Evento", b =>
                 {
                     b.HasOne("PartyMaker.Models.Usuario", "Usuario")
-                        .WithMany()
+                        .WithMany("Eventos")
                         .HasForeignKey("UsuarioId");
                 });
 
@@ -294,16 +296,18 @@ namespace PartyMaker.Data.Migrations
                 {
                     b.HasOne("Churras.Models.Evento", "Evento")
                         .WithMany("Participantes")
-                        .HasForeignKey("IdEvento")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EventoIdEvento");
                 });
 
             modelBuilder.Entity("Churras.Models.Recurso", b =>
                 {
                     b.HasOne("Churras.Models.Evento", "Evento")
                         .WithMany("Recursos")
-                        .HasForeignKey("IdEvento")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EventoIdEvento");
+
+                    b.HasOne("Churras.Models.Participante", "Participante")
+                        .WithMany()
+                        .HasForeignKey("ParticipanteIdParticipante");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

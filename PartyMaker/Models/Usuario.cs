@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Churras.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace PartyMaker.Models
@@ -11,6 +12,7 @@ namespace PartyMaker.Models
 
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
+        public List<Evento> Eventos { get; set; }
 
     }
 }

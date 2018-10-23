@@ -26,7 +26,7 @@ namespace Churras.Models
         public DateTime DataAlteracao { get; set; }
 
         public Evento Evento { get; set; }
-        public int IdEvento { get; set; }
+        public Participante Participante { get; set; }
 
     }
 }
