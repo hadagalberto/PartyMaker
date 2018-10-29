@@ -7,24 +7,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Churras.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using PartyMaker.Data;
+using PartyMaker.Models;
 
 namespace PartyMaker.Controllers
 {
     public class EventosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private UserManager<Usuario> _userManager;
 
-        public EventosController(ApplicationDbContext context)
+
+        public EventosController(ApplicationDbContext context,
+            UserManager<Usuario> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Eventos
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Eventos.ToListAsync());
+            var user = await _userManager.GetUserAsync(User);
+            return View(await _context.Eventos.Where(x => x.Usuario == user).ToListAsync());
         }
 
         // GET: Eventoes/Details/5
