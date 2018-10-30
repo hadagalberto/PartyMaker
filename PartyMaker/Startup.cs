@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -38,12 +39,21 @@ namespace PartyMaker
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(
-                    Configuration.GetConnectionString("MySqlConnection")));
+            var ambiente = Convert.ToInt32(Configuration["Ambiente"]);
+            switch (ambiente)
+            {
+                case (int)TipoBanco.SQLServer:
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlServer(
+                            Configuration.GetConnectionString("DefaultConnection")));
+                    break;
+                case (int)TipoBanco.MySQL:
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseMySql(
+                            Configuration.GetConnectionString("MySqlConnection")));
+                    break;
+            }
+
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
                 {
                     options.Password.RequireDigit = false;
@@ -89,11 +99,21 @@ namespace PartyMaker
             }
 
             app.UseHttpsRedirection();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
+        }
+
+        enum TipoBanco
+        {
+            SQLServer = 1,
+            MySQL = 2
         }
     }
 }
