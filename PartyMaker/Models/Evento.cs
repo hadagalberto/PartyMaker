@@ -31,7 +31,7 @@ namespace Churras.Models
         [ScaffoldColumn(false)]
         public DateTime DataModificacao { get; set; }
 
-        public Usuario Usuario { get; set; }
+        public IdentityUser Usuario { get; set; }
 
         public List<Participante> Participantes { get; set; }
         public List<Recurso> Recursos { get; set; }

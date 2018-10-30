@@ -16,11 +16,11 @@ namespace PartyMaker.Controllers
     public class EventosController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private UserManager<Usuario> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
 
         public EventosController(ApplicationDbContext context,
-            UserManager<Usuario> userManager)
+            UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -30,8 +30,14 @@ namespace PartyMaker.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUser();
             return View(await _context.Eventos.Where(x => x.Usuario == user).ToListAsync());
+        }
+
+        private async Task<IdentityUser> GetUser()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            return user;
         }
 
         // GET: Eventoes/Details/5
@@ -70,6 +76,7 @@ namespace PartyMaker.Controllers
         {
             if (ModelState.IsValid)
             {
+                evento.Usuario = await GetUser();
                 _context.Add(evento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -111,6 +118,10 @@ namespace PartyMaker.Controllers
             {
                 try
                 {
+                    if (evento.Usuario != await GetUser())
+                    {
+                        return NotFound();
+                    }
                     _context.Update(evento);
                     await _context.SaveChangesAsync();
                 }
@@ -145,6 +156,10 @@ namespace PartyMaker.Controllers
             {
                 return NotFound();
             }
+            if (evento.Usuario != await GetUser())
+            {
+                return NotFound();
+            }
 
             return View(evento);
         }
@@ -156,6 +171,10 @@ namespace PartyMaker.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var evento = await _context.Eventos.FindAsync(id);
+            if (evento.Usuario != await GetUser())
+            {
+                return NotFound();
+            }
             _context.Eventos.Remove(evento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

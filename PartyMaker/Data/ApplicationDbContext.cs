@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Churras.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PartyMaker.Models;
@@ -22,9 +23,6 @@ namespace PartyMaker.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Usuario>()
-                .HasMany(u => u.Eventos)
-                .WithOne(e => e.Usuario);
             builder.Entity<Evento>()
                 .HasMany(e => e.Participantes)
                 .WithOne(p => p.Evento);
