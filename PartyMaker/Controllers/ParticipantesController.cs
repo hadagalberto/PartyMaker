@@ -82,7 +82,7 @@ namespace PartyMaker.Controllers
                 participante.HashCode = Guid.NewGuid().ToString();
                 _context.Add(participante);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), EventoId);
             }
             return View(participante);
         }

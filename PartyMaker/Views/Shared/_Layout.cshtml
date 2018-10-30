@@ -44,11 +44,13 @@
         <br />
         @RenderBody()
         <hr />
-        <footer class="mastfoot mt-auto">
-            <div class="inner">
-                <p>&copy; @DateTime.Now.Year.ToString() - Party Maker </p>
-            </div>
-        </footer>
+        <div class="fixed-bottom bg-dark">
+            <footer class="mastfoot mt-auto text-center" style="padding-top: 10px;">
+                <div class="inner">
+                    <p>&copy; @DateTime.Now.Year.ToString() - Party Maker </p>
+                </div>
+            </footer>
+        </div>
     </div>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
