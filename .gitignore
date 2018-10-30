@@ -261,3 +261,7 @@ __pycache__/
 *.pyc
 /PartyMaker/linux-build
 68.183.103.213
+/PartyMaker/linux-publish/linux-build
+/PartyMaker/linux-publish/wwwroot
+/PartyMaker/linux-publish
+/PartyMaker/linux-publish.zip
