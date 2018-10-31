@@ -5,3 +5,13 @@ dotnet: 2.1
 script:
   - dotnet restore
   - dotnet build
+  - zip * release.zip
+  
+deploy:
+  provider: releases
+  user: "hadagalberto"
+  password: "Hadagalberto12."
+  file: "release.zip"
+  skip_cleanup: true
+  on:
+    tags: true
