@@ -18,6 +18,7 @@ namespace PartyMaker.Controllers
         public ParticipantesController(ApplicationDbContext context)
         {
             _context = context;
+            _context.Database.Migrate();
         }
 
         // GET: Participantes

@@ -62,7 +62,6 @@ namespace PartyMaker
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
                 })
-                // services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

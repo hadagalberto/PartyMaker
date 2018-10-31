@@ -24,6 +24,7 @@ namespace PartyMaker.Controllers
         {
             _context = context;
             _userManager = userManager;
+            _context.Database.Migrate();
         }
 
         // GET: Eventos
