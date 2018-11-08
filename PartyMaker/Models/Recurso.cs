@@ -6,12 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Churras.Models
+namespace PartyMaker.Models
 {
     public class Recurso
     {
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdRecurso { get; set; }
         [Required(ErrorMessage = "Campo Obrigatório")]
         [Display(Name = "Nome do Recurso")]

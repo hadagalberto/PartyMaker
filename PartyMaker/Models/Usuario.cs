@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Churras.Models;
+using PartyMaker.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace PartyMaker.Models
