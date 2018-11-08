@@ -97,7 +97,6 @@ namespace PartyMaker
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto

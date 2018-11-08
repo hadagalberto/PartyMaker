@@ -11,8 +11,7 @@ namespace PartyMaker.Data.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Discriminator",
                 table: "AspNetUsers",
-                nullable: false,
-                defaultValue: "");
+                nullable: false);
 
             migrationBuilder.AddColumn<string>(
                 name: "Nome",
