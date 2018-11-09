@@ -20,9 +20,11 @@ namespace PartyMaker.Controllers
         }
 
         // GET: Recursoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int Id)
         {
-            return View(await _context.Recursos.ToListAsync());
+            ViewBag.IdEvento = Id;
+            var evento = await _context.Eventos.FirstOrDefaultAsync(x => x.IdEvento == Id);
+            return View(await _context.Recursos.Where(r => r.Evento == evento).ToListAsync());
         }
 
         // GET: Recursoes/Details/5
@@ -44,8 +46,14 @@ namespace PartyMaker.Controllers
         }
 
         // GET: Recursoes/Create
-        public IActionResult Create()
+        public IActionResult Create(int Id)
         {
+            var evento = _context.Eventos.FirstOrDefault(x => x.IdEvento == Id);
+            if (evento != null)
+            {
+                ViewBag.EventoId = Id;
+                return View();
+            }
             return View();
         }
 
@@ -54,10 +62,11 @@ namespace PartyMaker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdRecurso,NomeRecurso,Quantidade,TipoRecurso")] Recurso recurso)
+        public async Task<IActionResult> Create([Bind("IdRecurso,NomeRecurso,Quantidade,TipoRecurso")] Recurso recurso, int idEvento)
         {
             if (ModelState.IsValid)
             {
+                recurso.Evento = await _context.Eventos.FirstOrDefaultAsync(e => e.IdEvento == idEvento);
                 _context.Add(recurso);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
