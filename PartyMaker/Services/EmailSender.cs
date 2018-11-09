@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using ElasticEmailClient;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -13,14 +14,11 @@ namespace PartyMaker.Services
     public class EmailSender : IEmailSender
     {
 
-        private readonly string SendGridAPIKey =
-            "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";
-
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             try
             {
-                Execute(email, subject, htmlMessage).Wait();
+                Execute(email, subject, htmlMessage);
                 return Task.FromResult(0);
             }
             catch (Exception e)
@@ -29,13 +27,20 @@ namespace PartyMaker.Services
             }
         }
 
-        public async Task Execute(string email, string subject, string message)
+        public void Execute(string email, string subject, string message)
         {
-            var client = new SendGridClient(SendGridAPIKey);
-            var from = new EmailAddress("partymaker@devsa.me", "Party Maker");
-            var to = new EmailAddress(email, "");
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, "", message);
-            var response = await client.SendEmailAsync(msg);
+            try
+            {
+                var result = Api.Email.Send(subject, "partymaker@devsa.me", "Party Maker", bodyHtml: message, to: new[] { email });
+            }
+            catch (Exception ex)
+            {
+                if (ex is ApplicationException)
+                    Console.WriteLine("Server didn't accept the request: " + ex.Message);
+                else
+                    Console.WriteLine("Something unexpected happened: " + ex.Message);
+
+            }
         }
     }
 }

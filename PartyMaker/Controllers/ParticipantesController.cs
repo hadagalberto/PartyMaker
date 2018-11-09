@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PartyMaker.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using PartyMaker.Data;
 
 namespace PartyMaker.Controllers
@@ -14,10 +15,12 @@ namespace PartyMaker.Controllers
     public class ParticipantesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IEmailSender _emailSender;
 
-        public ParticipantesController(ApplicationDbContext context)
+        public ParticipantesController(ApplicationDbContext context, IEmailSender emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
             _context.Database.Migrate();
         }
 
@@ -81,6 +84,7 @@ namespace PartyMaker.Controllers
                 var evento = await _context.Eventos.FirstOrDefaultAsync(x => x.IdEvento == EventoId);
                 participante.Evento = evento;
                 participante.HashCode = Guid.NewGuid().ToString();
+                await _emailSender.SendEmailAsync(participante.Email, "Cadastro", Json(participante).ToString());
                 _context.Add(participante);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), EventoId);
