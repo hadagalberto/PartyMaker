@@ -35,7 +35,8 @@
                         <a asp-action="Edit" asp-route-id="@item.IdEvento">Editar</a> |
                         <a asp-action="Details" asp-route-id="@item.IdEvento">Detalhes</a> |
                         <a asp-action="Delete" asp-route-id="@item.IdEvento">Deletar</a> |
-                        <a asp-action="Index" asp-controller="Participantes" asp-route-Id="@item.IdEvento">Participantes</a>
+                        <a asp-action="Index" asp-controller="Participantes" asp-route-Id="@item.IdEvento">Participantes</a> | 
+                        @*<a asp-action="EnviarEmails" asp-route-Id="@item.IdEvento">Enviar E-mails</a> |*@ 
                     </td>
                 </tr>
             }

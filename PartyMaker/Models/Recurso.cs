@@ -27,7 +27,6 @@ namespace PartyMaker.Models
         public DateTime DataAlteracao { get; set; }
 
         public Evento Evento { get; set; }
-        public Participante Participante { get; set; }
 
     }
 }

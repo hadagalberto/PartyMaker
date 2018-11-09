@@ -28,5 +28,6 @@ namespace PartyMaker.Models
         public DateTime DataAlterado { get; set; }
 
         public Evento Evento { get; set; }
+        public Recurso Recurso { get; set; }
     }
 }

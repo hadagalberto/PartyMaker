@@ -30,4 +30,11 @@ $(document).ready(function(parameters) {
             }
         }
     });
+
+    $(".datetimepicker").bootstrapMaterialDatePicker({
+        format: 'YYYY-MM-DD[T]hh:mm',
+        minDate: new Date(),
+        lang: 'pt-br',
+        shortTime: true
+    });
 });

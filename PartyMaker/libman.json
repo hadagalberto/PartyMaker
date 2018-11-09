@@ -14,6 +14,16 @@
     {
       "library": "datatables@1.10.19",
       "destination": "wwwroot/lib/datatables/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "bootstrap-material-datetimepicker@2.7.1",
+      "destination": "wwwroot/lib/bootstrap-material-datetimepicker/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "moment.js@2.22.2",
+      "destination": "wwwroot/lib/moment.js/"
     }
   ]
 }

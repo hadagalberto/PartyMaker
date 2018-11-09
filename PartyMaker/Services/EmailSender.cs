@@ -31,7 +31,9 @@ namespace PartyMaker.Services
         {
             try
             {
-                var result = Api.Email.Send(subject, "partymaker@devsa.me", "Party Maker", bodyHtml: message, to: new[] { email });
+                #if !DEBUG
+                    var result = Api.Email.Send(subject, "partymaker@devsa.me", "Party Maker", bodyHtml: message, to: new[] { email });
+                #endif
             }
             catch (Exception ex)
             {

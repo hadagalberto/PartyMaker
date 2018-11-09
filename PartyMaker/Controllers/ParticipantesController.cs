@@ -28,6 +28,7 @@ namespace PartyMaker.Controllers
         [Authorize]
         public async Task<IActionResult> Index(int Id)
         {
+            TempData.Keep();
             var evento = await _context.Eventos.FirstOrDefaultAsync(x => x.IdEvento == Id);
             if (evento != null)
             {
