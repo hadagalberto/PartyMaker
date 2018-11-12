@@ -64,6 +64,13 @@ namespace PartyMaker
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = "117780782083-3pq1ujcvvnutke290dv2rmt31d0kavmu.apps.googleusercontent.com";
+                googleOptions.ClientSecret = "mwpOgKxCsWi8C-OLa63Qq3q8";
+            });
+
             // comentario
             services.AddTransient<IEmailSender, EmailSender>();
 
