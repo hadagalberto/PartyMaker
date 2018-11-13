@@ -85,7 +85,7 @@ namespace PartyMaker.Controllers
                 var evento = await _context.Eventos.FirstOrDefaultAsync(x => x.IdEvento == EventoId);
                 participante.Evento = evento;
                 participante.HashCode = Guid.NewGuid().ToString();
-                await _emailSender.SendEmailAsync(participante.Email, "Cadastro", Json(participante).ToString());
+                //await _emailSender.SendEmailAsync(participante.Email, "Cadastro", Json(participante).ToString());
                 _context.Add(participante);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), EventoId);
