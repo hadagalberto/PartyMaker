@@ -19,89 +19,6 @@ namespace PartyMaker.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Churras.Models.Evento", b =>
-                {
-                    b.Property<int>("IdEvento")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataCriacao");
-
-                    b.Property<DateTime>("DataEvento");
-
-                    b.Property<DateTime>("DataModificacao");
-
-                    b.Property<string>("Local")
-                        .IsRequired();
-
-                    b.Property<string>("Nome")
-                        .IsRequired();
-
-                    b.Property<string>("UsuarioId");
-
-                    b.HasKey("IdEvento");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("Eventos");
-                });
-
-            modelBuilder.Entity("Churras.Models.Participante", b =>
-                {
-                    b.Property<int>("IdParticipante")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataAdicionado");
-
-                    b.Property<DateTime>("DataAlterado");
-
-                    b.Property<string>("Email")
-                        .IsRequired();
-
-                    b.Property<int?>("EventoIdEvento");
-
-                    b.Property<string>("HashCode");
-
-                    b.Property<string>("Nome")
-                        .IsRequired();
-
-                    b.HasKey("IdParticipante");
-
-                    b.HasIndex("EventoIdEvento");
-
-                    b.ToTable("Participantes");
-                });
-
-            modelBuilder.Entity("Churras.Models.Recurso", b =>
-                {
-                    b.Property<int>("IdRecurso")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataAlteracao");
-
-                    b.Property<int?>("EventoIdEvento");
-
-                    b.Property<string>("NomeRecurso")
-                        .IsRequired();
-
-                    b.Property<int?>("ParticipanteIdParticipante");
-
-                    b.Property<float>("Quantidade");
-
-                    b.Property<string>("TipoRecurso")
-                        .IsRequired();
-
-                    b.HasKey("IdRecurso");
-
-                    b.HasIndex("EventoIdEvento");
-
-                    b.HasIndex("ParticipanteIdParticipante");
-
-                    b.ToTable("Recursos");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -263,29 +180,87 @@ namespace PartyMaker.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Churras.Models.Evento", b =>
+            modelBuilder.Entity("PartyMaker.Models.Evento", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId");
+                    b.Property<int>("IdEvento")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DataCriacao");
+
+                    b.Property<DateTime>("DataEvento");
+
+                    b.Property<DateTime>("DataModificacao");
+
+                    b.Property<string>("Local")
+                        .IsRequired();
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.Property<string>("UsuarioId");
+
+                    b.HasKey("IdEvento");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Eventos");
                 });
 
-            modelBuilder.Entity("Churras.Models.Participante", b =>
+            modelBuilder.Entity("PartyMaker.Models.Participante", b =>
                 {
-                    b.HasOne("Churras.Models.Evento", "Evento")
-                        .WithMany("Participantes")
-                        .HasForeignKey("EventoIdEvento");
+                    b.Property<int>("IdParticipante")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DataAdicionado");
+
+                    b.Property<DateTime>("DataAlterado");
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<int?>("EventoIdEvento");
+
+                    b.Property<string>("HashCode");
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.Property<int?>("RecursoIdRecurso");
+
+                    b.HasKey("IdParticipante");
+
+                    b.HasIndex("EventoIdEvento");
+
+                    b.HasIndex("RecursoIdRecurso");
+
+                    b.ToTable("Participantes");
                 });
 
-            modelBuilder.Entity("Churras.Models.Recurso", b =>
+            modelBuilder.Entity("PartyMaker.Models.Recurso", b =>
                 {
-                    b.HasOne("Churras.Models.Evento", "Evento")
-                        .WithMany("Recursos")
-                        .HasForeignKey("EventoIdEvento");
+                    b.Property<int>("IdRecurso")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.HasOne("Churras.Models.Participante", "Participante")
-                        .WithMany()
-                        .HasForeignKey("ParticipanteIdParticipante");
+                    b.Property<DateTime>("DataAlteracao");
+
+                    b.Property<int?>("EventoIdEvento");
+
+                    b.Property<string>("NomeRecurso")
+                        .IsRequired();
+
+                    b.Property<float>("Quantidade");
+
+                    b.Property<string>("TipoRecurso")
+                        .IsRequired();
+
+                    b.HasKey("IdRecurso");
+
+                    b.HasIndex("EventoIdEvento");
+
+                    b.ToTable("Recursos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -331,6 +306,31 @@ namespace PartyMaker.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PartyMaker.Models.Evento", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
+                });
+
+            modelBuilder.Entity("PartyMaker.Models.Participante", b =>
+                {
+                    b.HasOne("PartyMaker.Models.Evento", "Evento")
+                        .WithMany("Participantes")
+                        .HasForeignKey("EventoIdEvento");
+
+                    b.HasOne("PartyMaker.Models.Recurso", "Recurso")
+                        .WithMany()
+                        .HasForeignKey("RecursoIdRecurso");
+                });
+
+            modelBuilder.Entity("PartyMaker.Models.Recurso", b =>
+                {
+                    b.HasOne("PartyMaker.Models.Evento", "Evento")
+                        .WithMany("Recursos")
+                        .HasForeignKey("EventoIdEvento");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Churras.Models;
+using PartyMaker.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using PartyMaker.Data;
-using PartyMaker.Models;
+using PartyMaker.Helpers;
 
 namespace PartyMaker.Controllers
 {
@@ -17,13 +16,15 @@ namespace PartyMaker.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-
+        private readonly IEmailSender _emailSender;
 
         public EventosController(ApplicationDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            IEmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
+            _emailSender = emailSender;
             _context.Database.Migrate();
         }
 
@@ -31,6 +32,7 @@ namespace PartyMaker.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
+            TempData.Keep();
             var user = await GetUser();
             return View(await _context.Eventos.Where(x => x.Usuario == user).ToListAsync());
         }
@@ -181,9 +183,46 @@ namespace PartyMaker.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Eventos/EnviarEmails/5
+        [Authorize]
+        public async Task<IActionResult> EnviarEmails(int id)
+        {
+            if (EventoExists(id))
+            {
+                var evento = await _context.Eventos.FirstOrDefaultAsync(x => x.IdEvento == id);
+                var participantes = _context.Participantes.Where(x => x.Evento == evento).ToList();
+                if (participantes.Any())
+                {
+                    foreach (var participante in participantes)
+                    {
+                        try
+                        {
+                            _emailSender.SendEmailAsync(participante.Email, "Notificação: " + evento.Nome, EmailsHelper.EmailNotificacao(evento.Nome, participante.Nome, evento.DataEvento.ToString("dd/MM/yyyy 'às' HH:mm"), "http://www.partymaker.com"));
+                        }
+                        catch (Exception ex)
+                        {
+                            TempData["MensagemErro"] = ex.Message;
+                        }
+                    }
+                    TempData["MensagemSucesso"] = $"{participantes.Count} e-mails enviados";
+                }
+                else
+                {
+                    TempData["MensagemAtencao"] = "Não existe nenhum participante nesse evento";
+                }
+            }
+            else
+            {
+                TempData["MensagemErro"] = "Evento inexistente";
+            }
+            TempData.Keep();
+            return RedirectToAction("Index", id);
+        }
+
         private bool EventoExists(int id)
         {
             return _context.Eventos.Any(e => e.IdEvento == id);
         }
+
     }
 }

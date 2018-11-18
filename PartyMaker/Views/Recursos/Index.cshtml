@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PartyMaker.Models.Recurso>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeRecurso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoRecurso)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeRecurso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoRecurso)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdRecurso">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdRecurso">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdRecurso">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

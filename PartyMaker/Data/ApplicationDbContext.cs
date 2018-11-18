@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Churras.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +28,8 @@ namespace PartyMaker.Data
             builder.Entity<Evento>()
                 .HasMany(e => e.Recursos)
                 .WithOne(r => r.Evento);
+            builder.Entity<Participante>()
+                .HasOne(p => p.Recurso);
         }
     }
 }

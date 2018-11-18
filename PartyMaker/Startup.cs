@@ -65,6 +65,13 @@ namespace PartyMaker
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = "117780782083-3pq1ujcvvnutke290dv2rmt31d0kavmu.apps.googleusercontent.com";
+                googleOptions.ClientSecret = "mwpOgKxCsWi8C-OLa63Qq3q8";
+            });
+
+            // comentario
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -97,7 +104,6 @@ namespace PartyMaker
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
