@@ -52,7 +52,7 @@ namespace PartyMaker.Areas.Identity.Pages.Account
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirmar Senha")]
-            [Compare("Password", ErrorMessage = "A senha e a confirmação estão diferentes.")]
+            [Compare("Password", ErrorMessage = "A senha e senha de confirmação não são iguais!")]
             public string ConfirmPassword { get; set; }
         }
 

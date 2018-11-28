@@ -196,3 +196,7 @@ body {
     }
     }
   }
+ 
+  .home-brand img{
+      height: 2px;
+  }

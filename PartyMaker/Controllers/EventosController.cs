@@ -197,7 +197,7 @@ namespace PartyMaker.Controllers
                     {
                         try
                         {
-                            _emailSender.SendEmailAsync(participante.Email, "Notificação: " + evento.Nome, EmailsHelper.EmailNotificacao(evento.Nome, participante.Nome, evento.DataEvento.ToString("dd/MM/yyyy 'às' HH:mm"), "http://www.partymaker.com"));
+                            _emailSender.SendEmailAsync(participante.Email, "Notificação: " + evento.Nome, EmailsHelper.EmailNotificacao(evento.Nome, participante.Nome, evento.DataEvento.ToString("dd/MM/yyyy 'às' HH:mm"), "http://pm.devsa.me"));
                         }
                         catch (Exception ex)
                         {

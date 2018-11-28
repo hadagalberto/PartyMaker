@@ -41,7 +41,7 @@ namespace PartyMaker.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Incapaz de carregar usuário com ID '{_userManager.GetUserId(User)}'.");
             }
 
             RequirePassword = await _userManager.HasPasswordAsync(user);
@@ -53,7 +53,7 @@ namespace PartyMaker.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Incapaz de carregar usuário com ID '{_userManager.GetUserId(User)}'.");
             }
 
             RequirePassword = await _userManager.HasPasswordAsync(user);
@@ -61,7 +61,7 @@ namespace PartyMaker.Areas.Identity.Pages.Account.Manage
             {
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
-                    ModelState.AddModelError(string.Empty, "Password not correct.");
+                    ModelState.AddModelError(string.Empty, "Senha incorreta!");
                     return Page();
                 }
             }
@@ -70,12 +70,12 @@ namespace PartyMaker.Areas.Identity.Pages.Account.Manage
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException($"Unexpected error occurred deleteing user with ID '{userId}'.");
+                throw new InvalidOperationException($"Erro inesperado ao excluir usuário com ID '{userId}'.");
             }
 
             await _signInManager.SignOutAsync();
 
-            _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
+            _logger.LogInformation("Usuário com ID '{UserId}' deletou sua conta.", userId);
 
             return Redirect("~/");
         }
