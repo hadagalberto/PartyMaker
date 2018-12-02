@@ -202,6 +202,11 @@ body {
     width: auto !important;
 }
 
+.navbar a:focus{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 /*
 ** links and buttons
 */
@@ -243,6 +248,11 @@ a:hover, a:focus{
     -moz-transition: background-color 0.5s ease-out;
     -o-transition: background-color 0.5s ease-out;
     transition: background-color 0.5s ease-out;
+}
+
+input:focus{
+    box-shadow: none !important;
+    border: 1px solid #db0000 !important;
 }
 
 /*
