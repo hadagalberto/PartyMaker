@@ -208,7 +208,15 @@ body {
 a{
     color: #bc0303;
 }
-a:hover{
+a:hover, a:focus{
+    color: #db0000;
+    text-decoration: none;
+}
+
+.btn-link{
+    color: #bc0303;
+}
+.btn-link:hover .btn-link:focus{
     color: #db0000;
     text-decoration: none;
 }
@@ -235,4 +243,29 @@ a:hover{
     -moz-transition: background-color 0.5s ease-out;
     -o-transition: background-color 0.5s ease-out;
     transition: background-color 0.5s ease-out;
+}
+
+/*
+** Table
+*/
+
+.previous{
+    margin-right: 1em;
+}
+
+th{
+    color: #fff;
+    background-color: #444;
+}
+
+#DataTables_Table_0_length{
+    display: none !important;
+}
+
+#DataTables_Table_0_filter{
+    display: none;
+}
+
+hr{
+    display: none;
 }
