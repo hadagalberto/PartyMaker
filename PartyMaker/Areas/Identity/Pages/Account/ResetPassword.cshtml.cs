@@ -30,7 +30,7 @@ namespace PartyMaker.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "A {0} precisa ter no minimo {2} e no maximo {1} caracteres.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "A {0} precisa ter entre {2} e {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 

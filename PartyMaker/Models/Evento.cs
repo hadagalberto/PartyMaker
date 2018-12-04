@@ -20,7 +20,7 @@ namespace PartyMaker.Models
         [Display(Name = "Local / Endereço do Evento")]
         [Required(ErrorMessage = "Campo Obrigatório")]
         public string Local { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyyhh:mm}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
         [Required(ErrorMessage = "Campo Obrigatório")]
         [Display(Name = "Data do Evento")]
         public DateTime DataEvento { get; set; }

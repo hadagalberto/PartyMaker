@@ -3,21 +3,20 @@
 @{
     ViewData["Title"] = "Participantes";
 }
-
-<h2>Participantes</h2>
-<h5>Evento: @ViewBag.EventoNome</h5>
-
+ <br/>
+<h2>Participantes de @ViewBag.EventoNome</h2>
+<br/>
 <p>
-    <a asp-action="Create" asp-route-Id="@ViewBag.EventoId">Criar Novo</a>
+    <a asp-action="Create" asp-route-Id="@ViewBag.EventoId" class="btn btn-secondary  ">Adicionar</a>
 </p>
 <table class="table dataTable">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayNameFor(model => model.Email)
             </th>
             <th></th>
         </tr>
@@ -26,15 +25,15 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdParticipante">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdParticipante">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdParticipante">Delete</a>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdParticipante">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdParticipante">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdParticipante">Remover</a>
             </td>
         </tr>
 }

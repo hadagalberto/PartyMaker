@@ -52,7 +52,7 @@ namespace PartyMaker.Areas.Identity.Pages.Account
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirmar Senha")]
-            [Compare("Password", ErrorMessage = "A senha e a confirmação estão diferentes.")]
+            [Compare("Password", ErrorMessage = "A senha e senha de confirmação não são iguais!")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -70,7 +70,7 @@ namespace PartyMaker.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Usuário criou uma nova conta com senha.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(

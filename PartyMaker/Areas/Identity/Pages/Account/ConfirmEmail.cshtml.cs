@@ -29,13 +29,13 @@ namespace PartyMaker.Areas.Identity.Pages.Account
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{userId}'.");
+                return NotFound($"Incapaz de carregar usuário com ID '{userId}'.");
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
+                throw new InvalidOperationException($"Erro ao confirmar email de usuário com ID '{userId}':");
             }
 
             return Page();
