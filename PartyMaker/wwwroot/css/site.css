@@ -197,7 +197,7 @@ body {
     }
   }
  
-  .home-brand img{
+  .cover-heading img{
     max-height: 11em  !important;
     width: auto !important;
 }
@@ -278,4 +278,8 @@ th{
 
 hr{
     display: none;
+}
+
+.container .bodycontent{
+    margin-bottom: 5em;
 }
