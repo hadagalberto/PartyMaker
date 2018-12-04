@@ -3,11 +3,9 @@
 @{
     ViewData["Title"] = "Alterar recurso";
 }
-
-<h2>Alterar</h2>
-
-<h4>Recurso</h4>
-<hr />
+<br/>
+<h2>Alterar Recurso</h2>
+<br/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -27,9 +25,10 @@
                 <label asp-for="TipoRecurso" class="control-label"></label>
                 <input asp-for="TipoRecurso" class="form-control" />
                 <span asp-validation-for="TipoRecurso" class="text-danger"></span>
-            </div>
+            </div>  
+            <br/>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Salvar" class="btn btn-secondary" />
             </div>
         </form>
     </div>

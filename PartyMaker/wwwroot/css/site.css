@@ -259,7 +259,7 @@ input:focus{
 ** Table
 */
 
-.previous{
+.previous, .current{
     margin-right: 1em;
 }
 

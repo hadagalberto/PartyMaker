@@ -3,11 +3,9 @@
 @{
     ViewData["Title"] = "Adicionar recurso";
 }
-
-<h2>Adicionar</h2>
-
-<h4>Recurso</h4>
-<hr />
+<br/>
+<h2>Adicionar Recurso</h2>
+<br/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -27,8 +25,9 @@
                 <input asp-for="TipoRecurso" class="form-control" />
                 <span asp-validation-for="TipoRecurso" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Adicionar" class="btn btn-secondary" />
             </div>
         </form>
     </div>

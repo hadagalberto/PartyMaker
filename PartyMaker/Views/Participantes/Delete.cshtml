@@ -3,30 +3,35 @@
 @{
     ViewData["Title"] = "Remover participante";
 }
-
+<br/>
 <h2>Remover</h2>
-
+<br/>
 <h3>Você tem certeza de que deseja remover este participante?</h3>
+<br/>
 <div>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
     </dl>
-    
+    <br/>
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdParticipante" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <p>
+        <input type="submit" value="Remover" class="btn btn-secondary" />
+        </p>
+        <p>
         <a asp-action="Index">Voltar para a lista</a>
+        </p>
     </form>
 </div>

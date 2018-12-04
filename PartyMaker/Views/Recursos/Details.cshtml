@@ -4,11 +4,11 @@
     ViewData["Title"] = "Detalhes do recurso";
 }
 
-<h2>Detalhes</h2>
+<br/>
+<h2>Detalhes de Recurso</h2>
 
+<br/>
 <div>
-    <h4>Recurso</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.NomeRecurso)
@@ -30,7 +30,12 @@
         </dd>
     </dl>
 </div>
+<br/>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.IdRecurso">Editar</a> |
+    <p>
+    <a asp-action="Edit" asp-route-id="@Model.IdRecurso" class="btn btn-secondary">Editar</a>
+    </p>
+    <p>
     <a asp-action="Index">Voltar para a lista</a>
+    </p>
 </div>
