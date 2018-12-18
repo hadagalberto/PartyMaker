@@ -28,6 +28,15 @@
         <dd>
             @Html.DisplayFor(model => model.DataEvento)
         </dd>
+        @if (!string.IsNullOrEmpty(Model.ImagemLocal))
+        {
+            <dt>
+                Imagem do Evento
+            </dt>
+            <dd>
+                <img src="\@Model.ImagemLocal" width="300"/>
+            </dd>
+        }
     </dl>
 </div>
 <br/>

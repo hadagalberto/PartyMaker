@@ -12,7 +12,6 @@ namespace PartyMaker.Models
     {
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdRecurso { get; set; }
         [Required(ErrorMessage = "Campo Obrigatório")]
         [Display(Name = "Nome do Recurso")]

@@ -17,13 +17,13 @@
     },
     {
       "provider": "cdnjs",
-      "library": "bootstrap-material-datetimepicker@2.7.1",
-      "destination": "wwwroot/lib/bootstrap-material-datetimepicker/"
+      "library": "moment.js@2.22.2",
+      "destination": "wwwroot/lib/moment.js/"
     },
     {
       "provider": "cdnjs",
-      "library": "moment.js@2.22.2",
-      "destination": "wwwroot/lib/moment.js/"
+      "library": "tempusdominus-bootstrap-4@5.1.2",
+      "destination": "wwwroot/lib/tempusdominus-bootstrap-4/"
     }
   ]
 }

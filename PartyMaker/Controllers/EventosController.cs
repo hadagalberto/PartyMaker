@@ -1,10 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PartyMaker.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using PartyMaker.Data;
@@ -17,14 +20,17 @@ namespace PartyMaker.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
         public EventosController(ApplicationDbContext context,
             UserManager<IdentityUser> userManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _userManager = userManager;
             _emailSender = emailSender;
+            _hostingEnvironment = hostingEnvironment;
             _context.Database.Migrate();
         }
 
@@ -110,23 +116,33 @@ namespace PartyMaker.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Nome,Local,DataEvento")] Evento evento)
+        public async Task<IActionResult> Edit(int id, [Bind("IdEvento,Nome,Local,DataEvento,ImagemNome,ImagemLocal")] Evento evento, IFormFile Upload)
         {
-            if (id != evento.IdEvento)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (evento.Usuario != await GetUser())
+                    if (Upload != null && Upload.Length > 0)
                     {
-                        return NotFound();
+                        var extAccepted = new[] { ".jpg", ".gif", ".png", ".jpeg", ".bmp" };
+                        if (extAccepted.Contains(Path.GetExtension(Upload.FileName)))
+                        {
+                            var fileName = Guid.NewGuid() + Path.GetExtension(Upload.FileName);
+                            var path = _hostingEnvironment.WebRootPath;
+                            var filePath = Path.Combine(path, "images", "uploads", fileName);
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await Upload.CopyToAsync(stream);
+                            }
+
+                            evento.ImagemLocal = Path.Combine("images", "uploads", fileName);
+                            evento.ImagemNome = Upload.FileName;
+                        }
                     }
+
                     _context.Update(evento);
                     await _context.SaveChangesAsync();
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -159,7 +175,9 @@ namespace PartyMaker.Controllers
             {
                 return NotFound();
             }
-            if (evento.Usuario != await GetUser())
+
+            var user = await GetUser();
+            if (evento.Usuario.Email != user.Email)
             {
                 return NotFound();
             }
@@ -174,7 +192,8 @@ namespace PartyMaker.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var evento = await _context.Eventos.FindAsync(id);
-            if (evento.Usuario != await GetUser())
+            var user = await GetUser();
+            if (evento.Usuario.Email != user.Email)
             {
                 return NotFound();
             }

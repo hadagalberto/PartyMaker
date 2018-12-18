@@ -11,7 +11,6 @@ namespace PartyMaker.Models
     {
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdParticipante { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]

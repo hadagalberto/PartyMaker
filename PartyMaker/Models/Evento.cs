@@ -11,7 +11,6 @@ namespace PartyMaker.Models
 
         [Key]
         [ScaffoldColumn(false)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdEvento { get; set; }
 
         [Display(Name = "Nome do Evento")]
@@ -28,6 +27,9 @@ namespace PartyMaker.Models
         public DateTime DataCriacao { get; set; }
         [ScaffoldColumn(false)]
         public DateTime DataModificacao { get; set; }
+        [Display(Name = "Imagem do Evento")]
+        public string ImagemNome { get; set; }
+        public string ImagemLocal { get; set; }
 
         public IdentityUser Usuario { get; set; }
 

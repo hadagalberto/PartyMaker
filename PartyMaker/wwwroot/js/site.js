@@ -31,10 +31,14 @@ $(document).ready(function(parameters) {
         }
     });
 
-    $(".datetimepicker").bootstrapMaterialDatePicker({
-        format: 'YYYY-MM-DD[T]hh:mm',
-        minDate: new Date(),
-        lang: 'pt-br',
-        shortTime: true
+    $(".datetimepicker").datetimepicker({
+        locale: 'pt-br',
+        format: 'DD-MM-YYYY hh:mm',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
     });
 });

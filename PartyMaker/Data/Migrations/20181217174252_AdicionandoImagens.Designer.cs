@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PartyMaker.Data;
@@ -9,15 +10,16 @@ using PartyMaker.Data;
 namespace PartyMaker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181203214747_migrationdatetime")]
-    partial class migrationdatetime
+    [Migration("20181217174252_AdicionandoImagens")]
+    partial class AdicionandoImagens
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -37,7 +39,8 @@ namespace PartyMaker.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -45,7 +48,8 @@ namespace PartyMaker.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -106,7 +110,8 @@ namespace PartyMaker.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -114,7 +119,8 @@ namespace PartyMaker.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -179,13 +185,18 @@ namespace PartyMaker.Data.Migrations
             modelBuilder.Entity("PartyMaker.Models.Evento", b =>
                 {
                     b.Property<int>("IdEvento")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DataCriacao");
 
                     b.Property<DateTime>("DataEvento");
 
                     b.Property<DateTime>("DataModificacao");
+
+                    b.Property<string>("ImagemLocal");
+
+                    b.Property<string>("ImagemNome");
 
                     b.Property<string>("Local")
                         .IsRequired();
@@ -205,7 +216,8 @@ namespace PartyMaker.Data.Migrations
             modelBuilder.Entity("PartyMaker.Models.Participante", b =>
                 {
                     b.Property<int>("IdParticipante")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DataAdicionado");
 
@@ -235,7 +247,8 @@ namespace PartyMaker.Data.Migrations
             modelBuilder.Entity("PartyMaker.Models.Recurso", b =>
                 {
                     b.Property<int>("IdRecurso")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DataAlteracao");
 
